@@ -1,5 +1,6 @@
 """新闻文章库下载"""
 
+import os
 import threading
 import httpx
 from lxml import etree
@@ -24,6 +25,8 @@ class NewsSpider():
         self.goose.config.target_language = 'zh'
         self.goose.config.stopwords_class = StopWordsChinese
         self.lock = threading.Lock()
+        if not os.path.exists('news'):
+            os.mkdir('news')
 
     @retry(stop_max_attempt_number=3)
     def thread_go(self,tname):
